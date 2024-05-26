@@ -12,12 +12,12 @@ const Contact = () => {
         <form action="#" className="space-y-8">
           <div>
             <label className="block mb-2 text-sm font-medium text-white">
-              Your email
+              Your Name
             </label>
             <input
-              type="email"
+              type="string"
               className="placeholder-white placeholder-opacity-50  bg-transparent text-white text-sm rounded-lg block w-full p-2.5"
-              placeholder="name@flowbite.com"
+              placeholder="name...."
             />
           </div>
           <div>

@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  background: linear-gradient(to right, #06b6d4, #3b82f6);
+  font-family: poppins;
+}
