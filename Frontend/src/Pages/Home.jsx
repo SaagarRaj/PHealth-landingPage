@@ -4,7 +4,7 @@ import Cards from "./components/Cards";
 import Contact from "./components/Contact";
 const Home = () => {
   return (
-    <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
+    <div className=" bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
       <Navbar />
       <div className=" flex-col justify-center px-8 md:px-[100px] min-h-[90vh]">
         <p className="font-poppins w-full md:text-8xl mt-[100px] font-bold text-center text-4xl ">

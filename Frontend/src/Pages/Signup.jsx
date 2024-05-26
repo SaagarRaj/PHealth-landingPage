@@ -1,10 +1,33 @@
 import { useState } from "react";
 import Footer from "./components/Footer";
 import { Link } from "react-router-dom";
+import { Url } from "./Url";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Signup = () => {
   const [isChecked, setIsChecked] = useState(false);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [merchantId, setMerchantId] = useState("NA");
+  const navigate = useNavigate();
   const handleCheckBox = (event) => {
     setIsChecked(event.target.checked);
+  };
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(Url + "/auth/signup", {
+        username,
+        email,
+        merchantId,
+        password,
+      });
+      navigate("/signupsuccess");
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>
@@ -20,7 +43,7 @@ const Signup = () => {
           </div>
         </nav>
 
-        <div className="w-full flex justify-center items-center h-[80vh] ">
+        <div className="w-full flex justify-center items-center h-[80vh]  ">
           <div className="flex flex-col justify-center items-center space-y-4 w-[80%] md:w-[25%] p-3 pt-4 pb-4 rounded-xl shadow-[0_0_2px_rgba(255,255,255,0.5),inset_0_0_2px_rgba(255,255,255,0.5),0_0_5px_rgba(255,255,255,0.5),0_0_15px_rgba(255,255,255,0.5),0_0_30px_rgba(255,255,255,0.5)]">
             <h1 className="text-xl font-bold  "> Create an account </h1>
             <div className="flex justify-center items-center space-x-3 ">
@@ -37,30 +60,37 @@ const Signup = () => {
             </div>
 
             <input
-              className="w-full px-4 py-2 border-2 border-black outline-0 rounded-tl-lg rounded-tr-lg"
+              className="w-full px-4 py-2 border-2 border-black outline-0 rounded-tl-lg rounded-tr-lg text-black"
               type="text"
+              onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your usename"
             />
             {isChecked && (
               <>
                 <input
-                  className="w-full px-4 py-2 border-2 border-black outline-0 "
+                  className="w-full px-4 py-2 border-2 border-black outline-0  text-black"
                   type="text"
                   placeholder="Enter Merchant Id"
+                  onChange={(e) => setMerchantId(e.target.value)}
                 />
               </>
             )}
             <input
-              className="w-full px-4 py-2 border-2 border-black outline-0"
+              className="w-full px-4 py-2 border-2 border-black outline-0  text-black"
               type="email"
               placeholder="Enter your Email"
+              onChange={(e) => setEmail(e.target.value)}
             />
             <input
-              className="w-full px-4 py-2 border-2 border-black outline-0 rounded-bl-lg rounded-br-lg "
+              className="w-full px-4 py-2 border-2 border-black outline-0 rounded-bl-lg rounded-br-lg  text-black"
               type="password"
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <button className="w-full px-4 py-2.5 text-lg font-thin text-white bg-black rounded-bl-lg rounded-br-lg hover:bg-gray-100 hover:text-black">
+            <button
+              className="w-full px-4 py-2.5 text-lg font-thin text-white bg-black rounded-bl-lg rounded-br-lg hover:bg-gray-100 hover:text-black"
+              onClick={handleClick}
+            >
               Sign up
             </button>
           </div>

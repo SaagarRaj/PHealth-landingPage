@@ -1,4 +1,21 @@
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Url } from "../Url";
 const Contact = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.put(Url + "/contact", { name, email, message });
+      navigate("/contactSuccess");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
@@ -16,6 +33,7 @@ const Contact = () => {
             </label>
             <input
               type="string"
+              onChange={(e) => setName(e.target.value)}
               className="placeholder-white placeholder-opacity-50  bg-transparent text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="name...."
             />
@@ -26,6 +44,7 @@ const Contact = () => {
             </label>
             <input
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               className="placeholder-white placeholder-opacity-50  bg-transparent text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="name@flowbite.com"
             />
@@ -37,6 +56,7 @@ const Contact = () => {
             <textarea
               id="message"
               rows="6"
+              onChange={(e) => setMessage(e.target.value)}
               className="backdrop-blur bg-transparent text-white text-sm rounded-lg block w-full p-2.5"
               placeholder="Leave a comment..."
             ></textarea>
@@ -44,7 +64,7 @@ const Contact = () => {
 
           <div className="flex items-center justify-center ">
             <button
-              type="submit"
+              onClick={handleClick}
               className="py-3 px-5 text-sm font-medium text-center border border-white text-white rounded-lg sm:w-fit"
             >
               Send message

@@ -1,7 +1,24 @@
+import axios from "axios";
 import Footer from "./components/Footer";
 import { Link } from "react-router-dom";
-
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Url } from "./Url";
 const Login = () => {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const handleClick = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.post(Url + "/auth/login", { email, password });
+      navigate("/loginsuccess");
+    } catch (error) {
+      setError(true);
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
@@ -22,16 +39,24 @@ const Login = () => {
             <input
               className="w-full px-4 py-2 border border-black outline-0 rounded-tl-lg rounded-tr-lg text-black"
               type="email"
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your e-mail"
             />
             <input
               className="w-full text-black px-4 py-2 border border-black outline-0"
               type="password"
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
             />
-            <button className="w-full px-4 py-2.5 text-lg font-thin text-white bg-black rounded-bl-lg rounded-br-lg hover:bg-gray-100 hover:text-black">
+            <button
+              className="w-full px-4 py-2.5 text-lg font-thin text-white bg-black rounded-bl-lg rounded-br-lg hover:bg-gray-100 hover:text-black"
+              onClick={handleClick}
+            >
               Log in
             </button>
+            {error && (
+              <h3 className="text-red-500 text-sm">Something went wrong</h3>
+            )}
 
             <div className="flex justify-center items-center space-x-3 ">
               <p> New Here ?</p>
